@@ -1,9 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Basecamp3Api</RootNamespace>
+        <Authors>Dwi Vendy Pratama</Authors>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/vendyp/basecamp3api.net</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/vendyp/basecamp3api.net</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/vendyp/basecamp3api.net/blob/main/LICENSE</PackageLicenseUrl>
+        <LangVersion>latest</LangVersion>
+        <Description>.NET Class Library for Basecamp 3 API Integration</Description>
+    </PropertyGroup>
 
 </Project>
