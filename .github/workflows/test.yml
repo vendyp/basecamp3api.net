@@ -10,33 +10,33 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  testing:
     runs-on: ubuntu-latest
     environment: Testing
     steps:
-    - uses: actions/checkout@v3
-    - name: Update JSON File
-      run: |
-        # Get the new values from the previous step's outputs
-        clientid="${{ secrets.CLIENTID }}"
-        clientsecretid="${{ secrets.CLIENTSECRETID }}"
-        accesstoken="${{ secrets.ACCESSTOKEN }}"
-        refreshtoken="${{ secrets.CLIENTSECRETID }}"
-        
-        # Update the JSON file using jq
-        jq --arg clientid "$clientid" --arg clientsecretid "$clientsecretid" '.ClientId = $clientid | .ClientSecretId = $clientsecretid' tests/appsettings.json > updated_appsettings.json
-
-        # Update the JSON file using jq
-        jq --arg accesstoken "$accesstoken" --arg refreshtoken "$refreshtoken" --arg refreshtoken "$refreshtoken" '.access_token = $accesstoken | .refresh_token = $refreshtoken' tests/basecamp.json > updated_basecamp.json
-
-        # Overwrite the original file with the updated contents
-        mv updated_appsettings.json tests/appsettings.json
-        mv updated_basecamp.json tests/basecamp.json
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Test
-      run: dotnet test --verbosity normal
+      - uses: actions/checkout@v3
+      - name: Update JSON File
+        run: |
+          # Get the new values from the previous step's outputs
+          clientid="${{ secrets.CLIENTID }}"
+          clientsecretid="${{ secrets.CLIENTSECRETID }}"
+          accesstoken="${{ secrets.ACCESSTOKEN }}"
+          refreshtoken="${{ secrets.CLIENTSECRETID }}"
+          
+          # Update the JSON file using jq
+          jq --arg clientid "$clientid" --arg clientsecretid "$clientsecretid" '.ClientId = $clientid | .ClientSecretId = $clientsecretid' tests/appsettings.json > updated_appsettings.json
+          
+          # Update the JSON file using jq
+          jq --arg accesstoken "$accesstoken" --arg refreshtoken "$refreshtoken" --arg refreshtoken "$refreshtoken" '.access_token = $accesstoken | .refresh_token = $refreshtoken' tests/basecamp.json > updated_basecamp.json
+          
+          # Overwrite the original file with the updated contents
+          mv updated_appsettings.json tests/appsettings.json
+          mv updated_basecamp.json tests/basecamp.json
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Test
+        run: dotnet test --verbosity normal
