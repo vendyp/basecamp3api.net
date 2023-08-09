@@ -16,4 +16,14 @@ public class AuthenticationTests
         var result = await _baseFixture.Client.GetAuthorizationAsync();
         result.ShouldNotBeNull();
     }
+
+    [Fact]
+    public void GetLoginUrl_Should_Do_As_Excepted()
+    {
+        string state = Guid.NewGuid().ToString();
+        var result = _baseFixture.Client.GetLoginUrl(state);
+
+        var uri = new Uri(result);
+        uri.AbsoluteUri.Contains(BasecampApiClient.AuthUrl).ShouldBeTrue();
+    }
 }
