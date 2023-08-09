@@ -34,6 +34,10 @@ To be update..
 # Supports API
 
 * Authentication OAuth2
+  * GetLoginUrl
+  * GenerateTokenAsync
+  * GetAuthorizationAsync
+  * RefreshTokenAsync
 * Project(s)
   * Get All Project
   * Get Project

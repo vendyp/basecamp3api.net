@@ -26,4 +26,11 @@ public class AuthenticationTests
         var uri = new Uri(result);
         uri.AbsoluteUri.Contains(BasecampApiClient.AuthUrl).ShouldBeTrue();
     }
+
+    [Fact]
+    public async Task RefreshToken_Should_Do_As_Excepted()
+    {
+        var result = await _baseFixture.Client.RefreshTokenAsync();
+        result.ShouldNotBeNull();
+    }
 }

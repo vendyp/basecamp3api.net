@@ -57,6 +57,12 @@ public partial class BasecampApiClient
         return result;
     }
 
+    /// <summary>
+    /// Get authorization detail user by bearer token
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="Exception"></exception>
     public async Task<Auth> GetAuthorizationAsync()
     {
         if (!TokenHasBeenSet)
@@ -74,6 +80,46 @@ public partial class BasecampApiClient
             throw new Exception("Result not OK when Generate Token", new Exception($"With message : {content}"));
 
         var result = JsonSerializer.Deserialize<Auth>(content)!;
+
+        return result;
+    }
+
+    /// <summary>
+    /// Generate refresh token
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="Exception"></exception>
+    public async Task<Token> RefreshTokenAsync()
+    {
+        if (!TokenHasBeenSet)
+            throw new InvalidOperationException("Token has not been set");
+
+        //POST https://launchpad.37signals.com/authorization/token?type=refresh&refresh_token=your-current-refresh-token&client_id=your-client-id&redirect_uri=your-redirect-uri&client_secret=your-client-secret
+
+        var tokenUriBuilder = new UriBuilder(AuthTokenUrl);
+        var query = HttpUtility.ParseQueryString(tokenUriBuilder.Query);
+        query["type"] = "refresh";
+        query["client_id"] = _setting.ClientId;
+        query["redirect_uri"] = _setting.RedirectUrl!.OriginalString;
+        query["client_secret"] = _setting.ClientSecret;
+        query["refresh_token"] = RefreshToken;
+        tokenUriBuilder.Query = query.ToString();
+
+        var request = new HttpRequestMessage(HttpMethod.Post, tokenUriBuilder.ToString());
+
+        var response = await _httpClient.SendAsync(request, CancellationToken.None);
+
+        var content = await response.Content.ReadAsStringAsync();
+
+        if (response.StatusCode != HttpStatusCode.OK)
+            throw new Exception("Result not OK when Refresh Token", new Exception($"With message : {content}"));
+
+        var result = JsonSerializer.Deserialize<Token>(content)!;
+
+        //re-update current access token
+        AccessToken = result.AccessToken;
+        ExpiresIn = result.ExpiresIn;
 
         return result;
     }
