@@ -11,27 +11,17 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    environment: Testing
     steps:
     - uses: actions/checkout@v3
-    - name: Set Values
-      id: set_new_values
-      run: |
-        echo "::set-output name=clientid::${{ secrets.CLIENTID }}"
-        echo "::set-output name=clientsecretid::${{ secrets.CLIENTSECRETID }}"
-        echo "::set-output name=accesstoken::${{ secrets.ACCESSTOKEN }}"
-        echo "::set-output name=refreshtoken::${{ secrets.REFRESHTOKEN }}"
-        echo "::set-output name=redirecturl::${{ secrets.REDIRECTURL }}"
     - name: Update JSON File
       run: |
         # Get the new values from the previous step's outputs
-        clientid="${{ steps.set_new_values.outputs.value1 }}"
-        clientsecretid="${{ steps.set_new_values.outputs.value2 }}"
-        accesstoken="${{ steps.set_new_values.outputs.value2 }}"
-        refreshtoken="${{ steps.set_new_values.outputs.value2 }}"
-        redirecturl="${{ steps.set_new_values.outputs.value2 }}"
+        clientid="${{ secrets.CLIENTID }}"
+        clientsecretid="${{ secrets.CLIENTSECRETID }}"
+        accesstoken="${{ secrets.ACCESSTOKEN }}"
+        refreshtoken="${{ secrets.CLIENTSECRETID }}"
         
         # Update the JSON file using jq
         jq --arg clientid "$clientid" --arg clientsecretid "$clientsecretid" '.ClientId = $clientid | .ClientSecretId = $clientsecretid' tests/appsettings.json > updated_appsettings.json
