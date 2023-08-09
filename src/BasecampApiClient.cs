@@ -1,19 +1,52 @@
 ﻿namespace Basecamp3Api;
 
-public partial class BasecampApiClient
+public partial class BasecampApiClient : IDisposable
 {
-    private readonly string _clientId;
-    private readonly string _secretId;
+    public const string AuthUrl = "https://launchpad.37signals.com/authorization/new";
+    public const string AuthTokenUrl = "https://launchpad.37signals.com/authorization/token";
+    public const string BaseUrl = "https://3.basecampapi.com/";
 
-    public BasecampApiClient(string clientId, string secretId)
+    private readonly HttpClient _httpClient;
+    private readonly BasecampApiSetting _setting;
+
+    public BasecampApiClient(BasecampApiSetting? setting)
     {
-        if (string.IsNullOrWhiteSpace(clientId))
+        if (setting is null)
+            throw new InvalidOperationException("Setting object can not be null");
+
+        if (string.IsNullOrWhiteSpace(setting.ClientId))
             throw new InvalidOperationException("Client id can not be null or empty");
 
-        if (string.IsNullOrWhiteSpace(secretId))
-            throw new InvalidOperationException("Secret id can not be null or empty");
+        if (string.IsNullOrWhiteSpace(setting.ClientSecret))
+            throw new InvalidOperationException("Client secret can not be null or empty");
 
-        _clientId = clientId;
-        _secretId = secretId;
+        _setting = setting;
+        TokenHasBeenSet = false;
+        _httpClient = new HttpClient();
+    }
+
+    private bool TokenHasBeenSet { get; set; }
+    private string? AccessToken { get; set; }
+    private string? RefreshToken { get; set; }
+    private long ExpiresIn { get; set; }
+
+    public void Setup(string accessToken, long expiresIn, string refreshToken)
+    {
+        if (string.IsNullOrWhiteSpace(accessToken))
+            throw new ArgumentNullException(nameof(accessToken), "Can not be null or empty");
+
+        if (string.IsNullOrWhiteSpace(refreshToken))
+            throw new ArgumentNullException(nameof(refreshToken), "Can not be null or empty");
+
+        AccessToken = accessToken;
+        RefreshToken = refreshToken;
+        ExpiresIn = expiresIn;
+
+        TokenHasBeenSet = true;
+    }
+
+    public void Dispose()
+    {
+        _httpClient.Dispose();
     }
 }

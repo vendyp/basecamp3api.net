@@ -20,7 +20,7 @@ var setting = new BasecampApiSetting
 
 var client = new BasecampApiClient(setting);
 
-var uriBuilder = new UriBuilder(client.AuthUrl);
+var uriBuilder = new UriBuilder(BasecampApiClient.AuthUrl);
 var query = HttpUtility.ParseQueryString(uriBuilder.Query);
 query["type"] = "web_server";
 query["client_id"] = setting.ClientId;
@@ -58,7 +58,7 @@ HttpClient httpClient = new HttpClient();
 
 
 // POST https://launchpad.37signals.com/authorization/token?type=web_server&client_id=your-client-id&redirect_uri=your-redirect-uri&client_secret=your-client-secret&code=verification-code
-var tokenUriBuilder = new UriBuilder(client.AuthTokenUrl);
+var tokenUriBuilder = new UriBuilder(BasecampApiClient.AuthTokenUrl);
 query = HttpUtility.ParseQueryString(tokenUriBuilder.Query);
 query["type"] = "web_server";
 query["client_id"] = setting.ClientId;
