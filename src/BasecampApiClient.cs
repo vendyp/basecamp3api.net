@@ -23,12 +23,16 @@ public partial class BasecampApiClient : IDisposable
         _setting = setting;
         TokenHasBeenSet = false;
         _httpClient = new HttpClient();
+        Accounts = new List<Account>();
     }
 
     private bool TokenHasBeenSet { get; set; }
+    private bool AccountHasBeenSet => Accounts.Any();
     private string? AccessToken { get; set; }
     private string? RefreshToken { get; set; }
     private long ExpiresIn { get; set; }
+
+    private List<Account> Accounts { get; }
 
     public void Setup(string accessToken, long expiresIn, string refreshToken)
     {

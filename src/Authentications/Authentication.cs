@@ -1,8 +1,4 @@
-﻿using System.Net;
-using System.Net.Http.Headers;
-using System.Text.Json;
-
-namespace Basecamp3Api;
+﻿namespace Basecamp3Api;
 
 public partial class BasecampApiClient
 {
@@ -77,9 +73,12 @@ public partial class BasecampApiClient
         var content = await response.Content.ReadAsStringAsync();
 
         if (response.StatusCode != HttpStatusCode.OK)
-            throw new Exception("Result not OK when Generate Token", new Exception($"With message : {content}"));
+            throw new Exception("Result not OK when Get Authorization", new Exception($"With message : {content}"));
 
         var result = JsonSerializer.Deserialize<Auth>(content)!;
+
+        Accounts.Clear();
+        Accounts.AddRange(result.Accounts!);
 
         return result;
     }
