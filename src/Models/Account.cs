@@ -1,6 +1,6 @@
 ﻿namespace Basecamp3Api.Models;
 
-public class Account
+public record Account
 {
     [JsonPropertyName("product")] public string Product { get; set; } = null!;
 

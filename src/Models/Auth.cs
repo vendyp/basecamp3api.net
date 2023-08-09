@@ -1,6 +1,6 @@
 ﻿namespace Basecamp3Api.Models;
 
-public class Auth
+public record Auth
 {
     [JsonPropertyName("expires_at")] public DateTime ExpiresAt { get; set; }
 

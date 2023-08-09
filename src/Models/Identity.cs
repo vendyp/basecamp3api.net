@@ -1,6 +1,6 @@
 ﻿namespace Basecamp3Api.Models;
 
-public class Identity
+public record Identity
 {
     [JsonPropertyName("id")] public int Id { get; set; }
 
