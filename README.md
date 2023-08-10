@@ -9,21 +9,6 @@ on [Here](https://github.com/vendyp/basecamp3api.net/blob/main/HOWTOREGISTER.md)
 
 This repository is still inprogress :)
 
-# Pre-Requisite
+# Change Log
 
-Install .NET7 from [here](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
-
-# Supports API
-
-* Authentication OAuth2
-    * GetLoginUrl
-    * GenerateTokenAsync
-    * GetAuthorizationAsync
-    * RefreshTokenAsync
-* Project(s)
-    * Get All Project
-    * Get Project
-    * Create Project
-    * Update Project
-    * Trash Project
-* To be update ..
+Change log detail are [here](https://github.com/vendyp/basecamp3api.net/blob/main/CHANGELOG.md)

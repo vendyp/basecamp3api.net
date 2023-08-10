@@ -16,10 +16,10 @@ public class GetProjectTests
         var auth = await _baseFixture.Client.GetAuthorizationAsync();
         auth.ShouldNotBeNull();
 
-        var projects = await _baseFixture.Client.GetAllProject(auth.Accounts!.First().Id, 1);
+        var projects = await _baseFixture.Client.GetAllProjectAsync(auth.Accounts!.First().Id, 1);
         projects.Results.Count.ShouldBePositive();
 
-        var project = await _baseFixture.Client.GetProject(auth.Accounts!.First().Id, projects.Results.First().Id);
+        var project = await _baseFixture.Client.GetProjectAsync(auth.Accounts!.First().Id, projects.Results.First().Id);
         project.ShouldNotBeNull();
         projects.Results.First().Id.ShouldBe(project.Id);
     }

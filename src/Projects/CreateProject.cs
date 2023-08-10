@@ -2,7 +2,8 @@
 
 public partial class BasecampApiClient
 {
-    public async Task CreateProjectAsync(int accountId, CreateProject data)
+    public async Task CreateProjectAsync(int accountId, CreateProject data,
+        CancellationToken cancellationToken = default)
     {
         if (!TokenHasBeenSet)
             throw new InvalidOperationException("Token has not been set");
@@ -21,9 +22,9 @@ public partial class BasecampApiClient
         request.Headers.Authorization = new AuthenticationHeaderValue("bearer", AccessToken);
         request.Headers.Add("User-Agent", $"Basecamp 4 Library ({_setting.RedirectUrl})");
         request.Content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
-        var response = await _httpClient.SendAsync(request, CancellationToken.None);
+        var response = await _httpClient.SendAsync(request, cancellationToken);
 
-        var content = await response.Content.ReadAsStringAsync();
+        var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
         if (response.StatusCode == HttpStatusCode.InsufficientStorage)
             throw new InsufficientStorageException();

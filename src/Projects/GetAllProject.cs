@@ -2,7 +2,8 @@
 
 public partial class BasecampApiClient
 {
-    public async Task<PagedList<Project>> GetAllProject(int accountId, int page)
+    public async Task<PagedList<Project>> GetAllProjectAsync(int accountId, int page,
+        CancellationToken cancellationToken = default)
     {
         if (!TokenHasBeenSet)
             throw new InvalidOperationException("Token has not been set");
@@ -27,9 +28,9 @@ public partial class BasecampApiClient
         var request = new HttpRequestMessage(HttpMethod.Get, uri.ToString());
         request.Headers.Authorization = new AuthenticationHeaderValue("bearer", AccessToken);
         request.Headers.Add("User-Agent", $"Basecamp 4 Library ({_setting.RedirectUrl})");
-        var response = await _httpClient.SendAsync(request, CancellationToken.None);
+        var response = await _httpClient.SendAsync(request, cancellationToken);
 
-        var content = await response.Content.ReadAsStringAsync();
+        var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
         if (response.StatusCode != HttpStatusCode.OK)
             throw new Exception("Result not OK when Get all project", new Exception($"With message : {content}"));

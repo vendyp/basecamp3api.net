@@ -17,12 +17,12 @@ public class GetAllProjectTests
         auth.ShouldNotBeNull();
 
         var page = 1;
-        var projects = await _baseFixture.Client.GetAllProject(auth.Accounts!.First().Id, 1);
+        var projects = await _baseFixture.Client.GetAllProjectAsync(auth.Accounts!.First().Id, 1);
         projects.Results.Count.ShouldBePositive();
 
         if (projects.HasNextPage)
         {
-            projects = await _baseFixture.Client.GetAllProject(auth.Accounts!.First().Id, ++page);
+            projects = await _baseFixture.Client.GetAllProjectAsync(auth.Accounts!.First().Id, ++page);
             projects.Results.Count.ShouldBePositive();
         }
     }
