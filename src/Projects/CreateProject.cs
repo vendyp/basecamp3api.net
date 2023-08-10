@@ -1,6 +1,4 @@
-﻿using Basecamp3Api.Exceptions;
-
-namespace Basecamp3Api;
+﻿namespace Basecamp3Api;
 
 public partial class BasecampApiClient
 {
@@ -22,6 +20,7 @@ public partial class BasecampApiClient
         var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString());
         request.Headers.Authorization = new AuthenticationHeaderValue("bearer", AccessToken);
         request.Headers.Add("User-Agent", $"Basecamp 4 Library ({_setting.RedirectUrl})");
+        request.Content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
         var response = await _httpClient.SendAsync(request, CancellationToken.None);
 
         var content = await response.Content.ReadAsStringAsync();
