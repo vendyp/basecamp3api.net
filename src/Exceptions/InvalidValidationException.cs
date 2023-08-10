@@ -2,7 +2,8 @@
 
 public class InvalidValidationException : Exception
 {
-    public InvalidValidationException() : base("One or more parameter is invalid, please read the documentation")
+    public InvalidValidationException(string inner) : base(
+        "One or more parameter is invalid, please read the documentation", new Exception(inner))
     {
     }
 }

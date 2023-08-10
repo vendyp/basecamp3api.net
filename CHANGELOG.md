@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.0.3-alpha
+
+- Add project API
+  - Update Project
+  - Trash Project
+
 ## 0.0.2-alpha
 
 - Add cancellation token to all API and next incoming API
