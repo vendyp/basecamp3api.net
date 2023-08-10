@@ -10,9 +10,14 @@
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/vendyp/basecamp3api.net</RepositoryUrl>
         <PackageProjectUrl>https://github.com/vendyp/basecamp3api.net</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/vendyp/basecamp3api.net/blob/main/LICENSE</PackageLicenseUrl>
+        <LicenseUrl>https://github.com/vendyp/basecamp3api.net/blob/main/LICENSE</LicenseUrl>
         <LangVersion>latest</LangVersion>
         <Description>.NET Class Library for Basecamp 3 API Integration</Description>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
     </PropertyGroup>
-    
+
+    <ItemGroup>
+        <None Include="..\LICENSE" Pack="true" PackagePath=""/>
+    </ItemGroup>
+
 </Project>
