@@ -35,7 +35,7 @@ jobs:
           kanbanid="${{ secrets.KANBANID }}"
           
           # Update the JSON file using jq
-          jq --arg clientid "$clientid" --arg clientsecretid "$clientsecretid" --arg appname "$appname" --arg accountid '$accountid' --arg projectid "$projectid" --arg messageboardid "$messageboardid" --arg todosetsid "$todosetsid" --arg vaultid "$vaultid" --arg campfireid "$campfireid" --arg scheduleid "$scheduleid" --arg questionnaireid "$questionnaireid" --arg inboxid "$inboxid" --arg kanbanid "$kanbanid" '.ClientId = $clientid | .ClientSecretId = $clientsecretid | .AppName = $appname' tests/appsettings.json > updated_appsettings.json
+          jq --arg clientid "$clientid" --arg clientsecretid "$clientsecretid" --arg appname "$appname" --arg accountid '$accountid' --arg projectid "$projectid" --arg messageboardid "$messageboardid" --arg todosetsid "$todosetsid" --arg vaultid "$vaultid" --arg campfireid "$campfireid" --arg scheduleid "$scheduleid" --arg questionnaireid "$questionnaireid" --arg inboxid "$inboxid" --arg kanbanid "$kanbanid" '.ClientId = $clientid | .ClientSecretId = $clientsecretid | .AppName = $appname | .AccountId = $accountid | .ProjectId = $projectid | .MessageBoardId = $messageboardid | .TodosetsId = $todosetsid | .VaultId = $vaultid | .CampfireId = $campfireid | .ScheduleId = $scheduleid | .QuestionnaireId = $questionnaireid | .InboxId = $inboxid | .KanbanId = $kanbanid' tests/appsettings.json > updated_appsettings.json
           
           # Update the JSON file using jq
           jq --arg accesstoken "$accesstoken" --arg refreshtoken "$refreshtoken" --arg refreshtoken "$refreshtoken" '.access_token = $accesstoken | .refresh_token = $refreshtoken' tests/basecamp.json > updated_basecamp.json
