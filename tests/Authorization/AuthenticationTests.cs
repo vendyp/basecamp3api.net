@@ -1,4 +1,6 @@
-﻿namespace Basecamp3Api.Tests.Authorization;
+﻿using Basecamp3Api.Models;
+
+namespace Basecamp3Api.Tests.Authorization;
 
 [Collection(nameof(BaseFixture))]
 public class AuthenticationTests
@@ -14,7 +16,7 @@ public class AuthenticationTests
     public async Task GetAuthorization_Should_Do_As_Excepted()
     {
         var result = await _baseFixture.Client.GetAuthorizationAsync();
-        result.ShouldNotBeNull();
+        result.Auth.ShouldNotBeNull();
     }
 
     [Fact]
@@ -31,6 +33,6 @@ public class AuthenticationTests
     public async Task RefreshToken_Should_Do_As_Excepted()
     {
         var result = await _baseFixture.Client.RefreshTokenAsync();
-        result.ShouldNotBeNull();
+        result.Token.ShouldNotBeNull();
     }
 }

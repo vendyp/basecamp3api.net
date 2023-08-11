@@ -1,4 +1,6 @@
-﻿namespace Basecamp3Api;
+﻿using System.Collections.Specialized;
+
+namespace Basecamp3Api;
 
 public partial class BasecampApiClient
 {
@@ -11,29 +13,29 @@ public partial class BasecampApiClient
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public async Task<Token> GenerateTokenAsync(string code, string identifier,
+    public async Task<(Token? Token, Error? Error)> GenerateTokenAsync(string code, string identifier,
         CancellationToken cancellationToken = default)
     {
-        var tokenUriBuilder = new UriBuilder(AuthTokenUrl);
-        var query = HttpUtility.ParseQueryString(tokenUriBuilder.Query);
-        query["type"] = "web_server";
-        query["client_id"] = _setting.ClientId;
-        query["redirect_uri"] = _setting.RedirectUrl!.OriginalString;
-        query["client_secret"] = _setting.ClientSecret;
-        query["code"] = code;
-        tokenUriBuilder.Query = query.ToString();
+        var uriBuilder = new UriBuilder(AuthTokenUrl);
+        var nvc = new NameValueCollection(5)
+        {
+            ["type"] = "web_server",
+            ["client_id"] = _setting.ClientId,
+            ["redirect_uri"] = _setting.RedirectUrl!.OriginalString,
+            ["client_secret"] = _setting.ClientSecret,
+            ["code"] = code
+        };
+        uriBuilder.AddQueryParams(ConstructQueryString(nvc));
 
-        var request = new HttpRequestMessage(HttpMethod.Post, tokenUriBuilder.ToString());
+        var request = CreateRequestMessage(HttpMethod.Post, uriBuilder.Uri, null);
 
-        var response = await _httpClient.SendAsync(request, cancellationToken);
+        var response = await SendMessageAsync(
+            message: request,
+            successStatusCode: HttpStatusCode.OK,
+            cancellationToken: cancellationToken);
 
-        var content = await response.Content.ReadAsStringAsync(cancellationToken);
-
-        if (response.StatusCode != HttpStatusCode.OK)
-            throw new Exception("Result not OK when Generate Token", new Exception($"With message : {content}"));
-
-        var result = JsonSerializer.Deserialize<Token>(content)!;
-
-        return result;
+        return response.Error.HasValue
+            ? (null, Error: response.Error)
+            : (JsonSerializer.Deserialize<Token>(response.Response!.Value.ResultJsonInString), null);
     }
 }

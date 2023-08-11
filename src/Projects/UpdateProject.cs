@@ -2,41 +2,66 @@
 
 public partial class BasecampApiClient
 {
-    public async Task UpdateProjectAsync(int accountId, long projectId, UpdateProject data,
+    public async Task<Error?> UpdateProjectAsync(int accountId, long projectId, UpdateProject data,
         CancellationToken cancellationToken = default)
     {
         if (!TokenHasBeenSet)
-            throw new InvalidOperationException("Token has not been set");
+            return new Error
+            {
+                StatusCode = -1,
+                Message = "Token has not been set"
+            };
 
         if (!AccountHasBeenSet)
-            throw new InvalidOperationException("Account has not been set");
+            return new Error
+            {
+                StatusCode = -1,
+                Message = "Account has not been set"
+            };
 
         if (!Accounts.Any(e => e.Id == accountId))
-            throw new ArgumentException("Invalid account id", nameof(accountId));
+            return new Error
+            {
+                StatusCode = -1,
+                Message = "Invalid account id"
+            };
 
         if (string.IsNullOrWhiteSpace(data.Name))
-            throw new InvalidValidationException("Property name of UpdateProject can not be null or empty");
+            return new Error
+            {
+                StatusCode = -1,
+                Message = "Property name of UpdateProject can not be null or empty"
+            };
 
         if (data.StartDt.HasValue || data.EndDt.HasValue)
         {
             if (data.StartDt.HasValue && data.EndDt.HasValue == false)
-                throw new InvalidValidationException("Property EndDt in UpdateProject can not be null");
+                return new Error
+                {
+                    StatusCode = -1,
+                    Message = "Property EndDt in UpdateProject can not be null"
+                };
 
             if (data.EndDt.HasValue && data.StartDt.HasValue == false)
-                throw new InvalidValidationException("Property StartDt in UpdateProject can not be null");
+                return new Error
+                {
+                    StatusCode = -1,
+                    Message = "Property StartDt in UpdateProject can not be null"
+                };
 
             if (data.StartDt.HasValue && data.EndDt.HasValue && data.StartDt.Value > data.EndDt.Value)
-                throw new InvalidValidationException("StartDt must less than EndDt");
+                return new Error
+                {
+                    StatusCode = -1,
+                    Message = "StartDt must less than EndDt"
+                };
         }
 
         //$ACCOUNT_ID/projects/{projectId}.json
         var pattern = $"{accountId}/projects/{projectId}.json";
-        var uri = new UriBuilder(BaseUrl + pattern);
+        var uri = new Uri(BaseUrl + pattern);
 
-        var request = new HttpRequestMessage(HttpMethod.Put, uri.ToString());
-        request.Headers.Authorization = new AuthenticationHeaderValue("bearer", AccessToken);
-        request.Headers.Add("User-Agent", $"Basecamp 4 Library ({_setting.RedirectUrl})");
-        request.Content = new StringContent(JsonSerializer.Serialize(new
+        var content = new StringContent(JsonSerializer.Serialize(new
         {
             name = data.Name,
             description = data.Description,
@@ -51,13 +76,10 @@ public partial class BasecampApiClient
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         }), Encoding.UTF8, "application/json");
 
-        var response = await _httpClient.SendAsync(request, cancellationToken);
+        var request = CreateRequestMessageWithAuthentication(HttpMethod.Put, uri, content);
 
-        var content = await response.Content.ReadAsStringAsync(cancellationToken);
+        var response = await SendMessageAsync(request, HttpStatusCode.OK, cancellationToken);
 
-        if (response.StatusCode != HttpStatusCode.OK)
-            throw new Exception("Result not Created when Update project", new Exception($"With message : {content}"));
-
-        throw new NotImplementedException();
+        return response.Error;
     }
 }

@@ -1,5 +1,4 @@
-﻿using Basecamp3Api.Exceptions;
-using Basecamp3Api.Models;
+﻿using Basecamp3Api.Models;
 
 namespace Basecamp3Api.Tests.Projects;
 
@@ -17,14 +16,14 @@ public class CreateProjectTests
     public async Task CreateProject_Should_Do_As_Excepted()
     {
         var auth = await _baseFixture.Client.GetAuthorizationAsync();
-        auth.ShouldNotBeNull();
+        auth.Auth.ShouldNotBeNull();
 
-        await Assert.ThrowsAsync<InsufficientStorageException>(async () =>
+        var resp = await _baseFixture.Client.CreateProjectAsync(auth.Auth!.Accounts!.Last().Id, new CreateProject
         {
-            await _baseFixture.Client.CreateProjectAsync(auth.Accounts!.Last().Id, new CreateProject
-            {
-                Name = "Test Project"
-            });
+            Name = "Test Project"
         });
+
+        resp.ShouldNotBeNull();
+        resp.Value.StatusCode.ShouldBe(507);
     }
 }

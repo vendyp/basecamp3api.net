@@ -28,7 +28,8 @@ public class BaseFixture : IDisposable, ICollectionFixture<BaseFixture>
         {
             ClientId = configuration.GetValue<string>("ClientId"),
             ClientSecret = configuration.GetValue<string>("ClientSecretId"),
-            RedirectUrl = new Uri(configuration.GetValue<string>("RedirectUrl")!)
+            RedirectUrl = new Uri(configuration.GetValue<string>("RedirectUrl")!),
+            AppName = configuration.GetValue<string>("AppName"),
         };
 
         Client = new BasecampApiClient(dto);

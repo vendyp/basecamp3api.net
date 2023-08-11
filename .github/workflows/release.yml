@@ -24,9 +24,10 @@ jobs:
           clientsecretid="${{ secrets.CLIENTSECRETID }}"
           accesstoken="${{ secrets.ACCESSTOKEN }}"
           refreshtoken="${{ secrets.CLIENTSECRETID }}"
+          appname="${{ secrets.APPNAME }}"
           
           # Update the JSON file using jq
-          jq --arg clientid "$clientid" --arg clientsecretid "$clientsecretid" '.ClientId = $clientid | .ClientSecretId = $clientsecretid' tests/appsettings.json > updated_appsettings.json
+          jq --arg clientid "$clientid" --arg clientsecretid "$clientsecretid" --arg appname "$appname" '.ClientId = $clientid | .ClientSecretId = $clientsecretid | .AppName = $appname' tests/appsettings.json > updated_appsettings.json
           
           # Update the JSON file using jq
           jq --arg accesstoken "$accesstoken" --arg refreshtoken "$refreshtoken" --arg refreshtoken "$refreshtoken" '.access_token = $accesstoken | .refresh_token = $refreshtoken' tests/basecamp.json > updated_basecamp.json

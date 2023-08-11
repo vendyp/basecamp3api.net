@@ -1,47 +1,59 @@
-﻿namespace Basecamp3Api;
+﻿using System.Collections.Specialized;
+
+namespace Basecamp3Api;
 
 public partial class BasecampApiClient
 {
-    public async Task<PagedList<Project>> GetAllProjectAsync(int accountId, int page,
+    public async Task<(PagedList<Project>? List, Error? Error)> GetAllProjectAsync(int accountId, int page,
         CancellationToken cancellationToken = default)
     {
         if (!TokenHasBeenSet)
-            throw new InvalidOperationException("Token has not been set");
+            return (null, new Error
+            {
+                StatusCode = -1,
+                Message = "Token has not been set"
+            });
 
         if (!AccountHasBeenSet)
-            throw new InvalidOperationException("Account has not been set");
+            return (null, new Error
+            {
+                StatusCode = -1,
+                Message = "Account has not been set"
+            });
 
         if (!Accounts.Any(e => e.Id == accountId))
-            throw new ArgumentException("Invalid account id", nameof(accountId));
+            return (null, new Error
+            {
+                StatusCode = -1,
+                Message = "Invalid account id"
+            });
 
         //$ACCOUNT_ID/projects.json
-        string pattern = $"{accountId}/projects.json";
+        var pattern = $"{accountId}/projects.json";
 
         var uri = new UriBuilder(BaseUrl + pattern);
         if (page > 1)
         {
-            var query = HttpUtility.ParseQueryString(uri.Query);
-            query["page"] = page.ToString();
-            uri.Query = query.ToString();
+            var nvc = new NameValueCollection(1)
+            {
+                ["page"] = page.ToString()
+            };
+            uri.AddQueryParams(ConstructQueryString(nvc));
         }
 
-        var request = new HttpRequestMessage(HttpMethod.Get, uri.ToString());
-        request.Headers.Authorization = new AuthenticationHeaderValue("bearer", AccessToken);
-        request.Headers.Add("User-Agent", $"Basecamp 4 Library ({_setting.RedirectUrl})");
-        var response = await _httpClient.SendAsync(request, cancellationToken);
+        var request = CreateRequestMessageWithAuthentication(HttpMethod.Get, uri.Uri, null);
 
-        var content = await response.Content.ReadAsStringAsync(cancellationToken);
+        var response = await SendMessageAsync(request, HttpStatusCode.OK, cancellationToken);
 
-        if (response.StatusCode != HttpStatusCode.OK)
-            throw new Exception("Result not OK when Get all project", new Exception($"With message : {content}"));
+        if (response.Error != null)
+            return (null, Error: response.Error);
 
-        var result = JsonSerializer.Deserialize<List<Project>>(content)!;
+        var result = JsonSerializer.Deserialize<List<Project>>(response.Response!.Value.ResultJsonInString)!;
 
-        response.Headers.TryGetValues("Link", out var values);
-
-        return new PagedList<Project>(result)
-        {
-            HasNextPage = !string.IsNullOrWhiteSpace(values?.FirstOrDefault())
-        };
+        return (new PagedList<Project>(result)
+            {
+                HasNextPage = response.Response.Value.Headers.Any(e => e.Key == "Link")
+            },
+            null);
     }
 }

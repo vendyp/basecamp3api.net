@@ -15,7 +15,8 @@ var setting = new BasecampApiSetting
 {
     ClientSecret = configuration.GetValue<string>("ClientSecretId"),
     ClientId = configuration.GetValue<string>("ClientId"),
-    RedirectUrl = new Uri(configuration.GetValue<string>("RedirectUrl")!)
+    RedirectUrl = new Uri(configuration.GetValue<string>("RedirectUrl")!),
+    AppName = configuration.GetValue<string>("AppName")!,
 };
 
 var client = new BasecampApiClient(setting);

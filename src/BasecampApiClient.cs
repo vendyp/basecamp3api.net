@@ -20,6 +20,9 @@ public partial class BasecampApiClient : IDisposable
         if (string.IsNullOrWhiteSpace(setting.ClientSecret))
             throw new InvalidOperationException("Client secret can not be null or empty");
 
+        if (string.IsNullOrWhiteSpace(setting.AppName))
+            throw new InvalidOperationException("App Name can not be null or empty");
+
         _setting = setting;
         TokenHasBeenSet = false;
         _httpClient = new HttpClient();

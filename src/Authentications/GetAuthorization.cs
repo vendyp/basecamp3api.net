@@ -8,27 +8,24 @@ public partial class BasecampApiClient
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>
     /// <exception cref="Exception"></exception>
-    public async Task<Auth> GetAuthorizationAsync(CancellationToken cancellationToken = default)
+    public async Task<(Auth? Auth, Error? Error)> GetAuthorizationAsync(CancellationToken cancellationToken = default)
     {
         if (!TokenHasBeenSet)
             throw new InvalidOperationException("Token has not been set");
 
         var uri = new Uri("https://launchpad.37signals.com/authorization.json");
 
-        var request = new HttpRequestMessage(HttpMethod.Get, uri.ToString());
-        request.Headers.Authorization = new AuthenticationHeaderValue("bearer", AccessToken);
-        var response = await _httpClient.SendAsync(request, cancellationToken);
+        var request = CreateRequestMessageWithAuthentication(HttpMethod.Get, uri, null);
+        var response = await SendMessageAsync(request, HttpStatusCode.OK, cancellationToken);
 
-        var content = await response.Content.ReadAsStringAsync(cancellationToken);
+        if (response.Error != null)
+            return (null, Error: response.Error);
 
-        if (response.StatusCode != HttpStatusCode.OK)
-            throw new Exception("Result not OK when Get Authorization", new Exception($"With message : {content}"));
-
-        var result = JsonSerializer.Deserialize<Auth>(content)!;
+        var result = JsonSerializer.Deserialize<Auth>(response.Response!.Value.ResultJsonInString)!;
 
         Accounts.Clear();
         Accounts.AddRange(result.Accounts!);
 
-        return result;
+        return (result, null);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Basecamp3Api.Tests.Projects;
+﻿using Basecamp3Api.Models;
+
+namespace Basecamp3Api.Tests.Projects;
 
 [Collection(nameof(BaseFixture))]
 public class GetProjectTests
@@ -14,13 +16,15 @@ public class GetProjectTests
     public async Task GetProject_Should_Do_As_Expected()
     {
         var auth = await _baseFixture.Client.GetAuthorizationAsync();
-        auth.ShouldNotBeNull();
+        auth.Auth.ShouldNotBeNull();
 
-        var projects = await _baseFixture.Client.GetAllProjectAsync(auth.Accounts!.First().Id, 1);
-        projects.Results.Count.ShouldBePositive();
+        var projects = await _baseFixture.Client.GetAllProjectAsync(auth.Auth.Accounts!.First().Id, 1);
+        projects.List!.Results.Count.ShouldBePositive();
 
-        var project = await _baseFixture.Client.GetProjectAsync(auth.Accounts!.First().Id, projects.Results.First().Id);
-        project.ShouldNotBeNull();
-        projects.Results.First().Id.ShouldBe(project.Id);
+        var project =
+            await _baseFixture.Client.GetProjectAsync(auth.Auth.Accounts!.First().Id, projects.List.Results.First().Id);
+        project.Error.ShouldBeNull();
+        project.Project.ShouldNotBeNull();
+        projects.List.Results.First().Id.ShouldBe(project.Project.Id);
     }
 }

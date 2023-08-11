@@ -2,34 +2,39 @@
 
 public partial class BasecampApiClient
 {
-    public async Task CreateProjectAsync(int accountId, CreateProject data,
+    public async Task<Error?> CreateProjectAsync(int accountId, CreateProject data,
         CancellationToken cancellationToken = default)
     {
         if (!TokenHasBeenSet)
-            throw new InvalidOperationException("Token has not been set");
+            return new Error
+            {
+                StatusCode = -1,
+                Message = "Token has not been set"
+            };
 
         if (!AccountHasBeenSet)
-            throw new InvalidOperationException("Account has not been set");
+            return new Error
+            {
+                StatusCode = -1,
+                Message = "Account has not been set"
+            };
 
         if (!Accounts.Any(e => e.Id == accountId))
-            throw new ArgumentException("Invalid account id", nameof(accountId));
+            return new Error
+            {
+                StatusCode = -1,
+                Message = "Invalid account id"
+            };
 
         //$ACCOUNT_ID/projects/.json
         var pattern = $"{accountId}/projects.json";
-        var uri = new UriBuilder(BaseUrl + pattern);
+        var uri = new Uri(BaseUrl + pattern);
 
-        var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString());
-        request.Headers.Authorization = new AuthenticationHeaderValue("bearer", AccessToken);
-        request.Headers.Add("User-Agent", $"Basecamp 4 Library ({_setting.RedirectUrl})");
-        request.Content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
-        var response = await _httpClient.SendAsync(request, cancellationToken);
+        var request = CreateRequestMessageWithAuthentication(HttpMethod.Post, uri,
+            new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json"));
 
-        var content = await response.Content.ReadAsStringAsync(cancellationToken);
+        var response = await SendMessageAsync(request, HttpStatusCode.Created, cancellationToken);
 
-        if (response.StatusCode == HttpStatusCode.InsufficientStorage)
-            throw new InsufficientStorageException();
-
-        if (response.StatusCode != HttpStatusCode.Created)
-            throw new Exception("Result not Created when Create project", new Exception($"With message : {content}"));
+        return response.Error;
     }
 }

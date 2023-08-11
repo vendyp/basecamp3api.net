@@ -2,34 +2,42 @@
 
 public partial class BasecampApiClient
 {
-    public async Task<Project> GetProjectAsync(int accountId, long projectId,
+    public async Task<(Project? Project, Error? Error)> GetProjectAsync(int accountId, long projectId,
         CancellationToken cancellationToken = default)
     {
         if (!TokenHasBeenSet)
-            throw new InvalidOperationException("Token has not been set");
+            return (null, new Error
+            {
+                StatusCode = -1,
+                Message = "Token has not been set"
+            });
 
         if (!AccountHasBeenSet)
-            throw new InvalidOperationException("Account has not been set");
+            return (null, new Error
+            {
+                StatusCode = -1,
+                Message = "Account has not been set"
+            });
 
         if (!Accounts.Any(e => e.Id == accountId))
-            throw new ArgumentException("Invalid account id", nameof(accountId));
+            return (null, new Error
+            {
+                StatusCode = -1,
+                Message = "Invalid account id"
+            });
 
-        //$ACCOUNT_ID/projects/1.json
-        string pattern = $"{accountId}/projects/{projectId}.json";
-        var uri = new UriBuilder(BaseUrl + pattern);
+        //$ACCOUNT_ID/projects/1.json   
+        var pattern = $"{accountId}/projects/{projectId}.json";
+        var uri = new Uri(BaseUrl + pattern);
+        var request = CreateRequestMessageWithAuthentication(HttpMethod.Get, uri, null);
 
-        var request = new HttpRequestMessage(HttpMethod.Get, uri.ToString());
-        request.Headers.Authorization = new AuthenticationHeaderValue("bearer", AccessToken);
-        request.Headers.Add("User-Agent", $"Basecamp 4 Library ({_setting.RedirectUrl})");
-        var response = await _httpClient.SendAsync(request, cancellationToken);
+        var response = await SendMessageAsync(request, HttpStatusCode.OK, cancellationToken);
 
-        var content = await response.Content.ReadAsStringAsync(cancellationToken);
+        if (response.Error != null)
+            return (null, response.Error);
 
-        if (response.StatusCode != HttpStatusCode.OK)
-            throw new Exception("Result not OK when Get project", new Exception($"With message : {content}"));
+        var result = JsonSerializer.Deserialize<Project>(response.Response!.Value.ResultJsonInString)!;
 
-        var result = JsonSerializer.Deserialize<Project>(content)!;
-
-        return result;
+        return (result, null);
     }
 }
