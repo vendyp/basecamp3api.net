@@ -6,14 +6,70 @@ namespace Basecamp3Api.Tests;
 [CollectionDefinition(nameof(BaseFixture))]
 public class BaseFixture : IDisposable, ICollectionFixture<BaseFixture>
 {
+    /// <summary>
+    /// Default selected account id from your account
+    /// </summary>
     public int AccountId { get; }
+
+    /// <summary>
+    /// Project id or bucket id
+    /// </summary>
     public long ProjectId { get; }
+
+    /// <summary>
+    /// Dock Message Board Id
+    /// </summary>
+    public long DockMessageBoardId { get; }
+
+    /// <summary>
+    /// Dock todosets id
+    /// </summary>
+    public long DockTodosetsId { get; }
+
+    /// <summary>
+    /// Dock vault id
+    /// </summary>
+    public long DockVaultId { get; }
+
+
+    /// <summary>
+    /// Campfire
+    /// </summary>
+    public long DockCampfireId { get; }
+
+    /// <summary>
+    /// Schedule
+    /// </summary>
+    public long DockScheduleId { get; }
+
+    /// <summary>
+    /// Quentionare
+    /// </summary>
+    public long DockQuestionnaireId { get; }
+
+    /// <summary>
+    /// Inbox
+    /// </summary>
+    public long DockInboxId { get; }
+
+    /// <summary>
+    /// Kanban
+    /// </summary>
+    public long DockKanbanId { get; }
 
     public BaseFixture()
     {
-        // please override this value for testing others api other than Projects
+        // get these from get project by id, replace these values with yours then test run will be just fine
         AccountId = 1;
         ProjectId = 1;
+        DockMessageBoardId = 1;
+        DockTodosetsId = 1;
+        DockVaultId = 1;
+        DockCampfireId = 1;
+        DockScheduleId = 1;
+        DockQuestionnaireId = 1;
+        DockInboxId = 1;
+        DockKanbanId = 1;
 
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("basecamp.json")
