@@ -6,8 +6,15 @@ namespace Basecamp3Api.Tests;
 [CollectionDefinition(nameof(BaseFixture))]
 public class BaseFixture : IDisposable, ICollectionFixture<BaseFixture>
 {
+    public int AccountId { get; }
+    public long ProjectId { get; }
+
     public BaseFixture()
     {
+        // please override this value for testing others api other than Projects
+        AccountId = 1;
+        ProjectId = 1;
+
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("basecamp.json")
             .AddJsonFile("appsettings.json")
