@@ -9,7 +9,7 @@ public class BaseFixture : IDisposable, ICollectionFixture<BaseFixture>
     /// <summary>
     /// Default selected account id from your account
     /// </summary>
-    public int AccountId { get; }
+    public long AccountId { get; }
 
     /// <summary>
     /// Project id or bucket id
@@ -97,6 +97,48 @@ public class BaseFixture : IDisposable, ICollectionFixture<BaseFixture>
 
         Client = new BasecampApiClient(dto);
         Client.Setup(Setting.AccessToken, Setting.ExpiresIn, Setting.RefreshToken);
+
+        //setup testing selected account id, project id, and others dock(s) id
+        //from appsettings.json
+        var accountId = configuration.GetValue<string>("AccountId");
+        if (!string.IsNullOrWhiteSpace(accountId) && long.TryParse(accountId, out var accId))
+            AccountId = accId;
+
+        var projectId = configuration.GetValue<string>("ProjectId");
+        if (!string.IsNullOrWhiteSpace(projectId) && long.TryParse(projectId, out var projId))
+            ProjectId = projId;
+
+        var messageBoardId = configuration.GetValue<string>("MessageBoardId");
+        if (!string.IsNullOrWhiteSpace(messageBoardId) && long.TryParse(messageBoardId, out var messBoardId))
+            DockMessageBoardId = messBoardId;
+
+        var todoSetsId = configuration.GetValue<string>("TodosetsId");
+        if (!string.IsNullOrWhiteSpace(todoSetsId) && long.TryParse(todoSetsId, out var tdSetsId))
+            DockTodosetsId = tdSetsId;
+
+        var vaultId = configuration.GetValue<string>("VaultId");
+        if (!string.IsNullOrWhiteSpace(vaultId) && long.TryParse(vaultId, out var valId))
+            DockVaultId = valId;
+
+        var campfireId = configuration.GetValue<string>("CampfireId");
+        if (!string.IsNullOrWhiteSpace(campfireId) && long.TryParse(campfireId, out var campId))
+            DockCampfireId = campId;
+
+        var scheduleId = configuration.GetValue<string>("ScheduleId");
+        if (!string.IsNullOrWhiteSpace(scheduleId) && long.TryParse(scheduleId, out var schId))
+            DockScheduleId = schId;
+
+        var questionnaireId = configuration.GetValue<string>("QuestionnaireId");
+        if (!string.IsNullOrWhiteSpace(questionnaireId) && long.TryParse(questionnaireId, out var qId))
+            DockQuestionnaireId = qId;
+
+        var inboxId = configuration.GetValue<string>("InboxId");
+        if (!string.IsNullOrWhiteSpace(inboxId) && long.TryParse(inboxId, out var iId))
+            DockInboxId = iId;
+
+        var kanbanId = configuration.GetValue<string>("KanbanId");
+        if (!string.IsNullOrWhiteSpace(kanbanId) && long.TryParse(kanbanId, out var kId))
+            DockKanbanId = kId;
     }
 
     public BasecampApiClient Client { get; }
