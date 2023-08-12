@@ -37,6 +37,20 @@ public partial class BasecampApiClient : IDisposable
 
     private List<Account> Accounts { get; }
 
+    internal Error? ValidateAccount(long accountId)
+    {
+        if (!_setting.ValidateAccountId) return null;
+
+        if (!Accounts.Any(e => e.Id == accountId))
+            return new Error
+            {
+                StatusCode = -1,
+                Message = "Invalid account id"
+            };
+
+        return null;
+    }
+
     public void Setup(string accessToken, long expiresIn, string refreshToken)
     {
         if (string.IsNullOrWhiteSpace(accessToken))

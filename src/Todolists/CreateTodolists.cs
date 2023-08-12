@@ -16,19 +16,9 @@ public partial class BasecampApiClient
                 Message = "Token has not been set"
             });
 
-        if (!AccountHasBeenSet)
-            return (null, new Error
-            {
-                StatusCode = -1,
-                Message = "Account has not been set"
-            });
-
-        if (!Accounts.Any(e => e.Id == accountId))
-            return (null, new Error
-            {
-                StatusCode = -1,
-                Message = "Invalid account id"
-            });
+        var err = ValidateAccount(accountId);
+        if (err != null)
+            return (null, err);
 
         // buckets/1/todosets/3/todolists.json
         var pattern = $"{accountId}/buckets/{projectId}/todosets/{todosetId}/todolists.json";

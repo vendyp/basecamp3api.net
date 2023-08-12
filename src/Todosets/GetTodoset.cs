@@ -5,6 +5,17 @@ public partial class BasecampApiClient
     public async Task<(Todoset? Todoset, Error? Error)> GetTodosetAsync(long accountId, long projectId, long todosetId,
         CancellationToken cancellationToken = default)
     {
+        if (!TokenHasBeenSet)
+            return (null, new Error
+            {
+                StatusCode = -1,
+                Message = "Token has not been set"
+            });
+
+        var err = ValidateAccount(accountId);
+        if (err != null)
+            return (null, err);
+
         // buckets/1/todosets/2.json
         var pattern = $"{accountId}/buckets/{projectId}/todosets/{todosetId}.json";
 
