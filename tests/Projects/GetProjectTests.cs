@@ -1,6 +1,4 @@
-﻿using Basecamp3Api.Models;
-
-namespace Basecamp3Api.Tests.Projects;
+﻿namespace Basecamp3Api.Tests.Projects;
 
 [Collection(nameof(BaseFixture))]
 public class GetProjectTests

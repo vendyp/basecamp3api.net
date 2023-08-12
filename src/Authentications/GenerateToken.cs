@@ -13,7 +13,9 @@ public partial class BasecampApiClient
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public async Task<(Token? Token, Error? Error)> GenerateTokenAsync(string code, string identifier,
+    public async Task<(Token? Token, Error? Error)> GenerateTokenAsync(
+        string code, 
+        string identifier,
         CancellationToken cancellationToken = default)
     {
         var uriBuilder = new UriBuilder(AuthTokenUrl);

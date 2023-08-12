@@ -1,5 +1,4 @@
-﻿using Basecamp3Api.Models;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace Basecamp3Api.Tests;
 

@@ -1,6 +1,4 @@
-﻿using Basecamp3Api.Models;
-
-namespace Basecamp3Api.Tests.Authorization;
+﻿namespace Basecamp3Api.Tests.Authorization;
 
 [Collection(nameof(BaseFixture))]
 public class AuthenticationTests

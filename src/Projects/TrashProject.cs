@@ -2,7 +2,9 @@
 
 public partial class BasecampApiClient
 {
-    public async Task<Error?> TrashProjectAsync(int accountId, long projectId,
+    public async Task<Error?> TrashProjectAsync(
+        long accountId, 
+        long projectId,
         CancellationToken cancellationToken = default)
     {
         if (!TokenHasBeenSet)

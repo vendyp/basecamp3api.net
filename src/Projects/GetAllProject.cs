@@ -4,7 +4,9 @@ namespace Basecamp3Api;
 
 public partial class BasecampApiClient
 {
-    public async Task<(PagedList<Project>? List, Error? Error)> GetAllProjectAsync(int accountId, int page,
+    public async Task<(PagedList<Project>? List, Error? Error)> GetAllProjectAsync(
+        long accountId, 
+        int page,
         CancellationToken cancellationToken = default)
     {
         if (!TokenHasBeenSet)
