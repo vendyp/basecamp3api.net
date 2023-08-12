@@ -45,13 +45,39 @@ public class TodolistsTests
         resultUpdate.Todoset.ShouldNotBeNull();
         resultUpdate.Todoset.Title.ShouldBe(secondName);
 
+        var resultArchived = await _baseFixture.Client.ArchiveTodolistsAsync(
+            _baseFixture.AccountId,
+            _baseFixture.ProjectId,
+            resultCreate.Todoset.Id);
+        resultArchived.ShouldBeNull();
+
+        var resultGet = await _baseFixture.Client.GetTodolistsAsync(_baseFixture.AccountId,
+            _baseFixture.ProjectId,
+            resultCreate.Todoset.Id);
+        resultGet.Error.ShouldBeNull();
+        resultGet.Todoset.ShouldNotBeNull();
+        resultGet.Todoset.Status.ShouldBe(nameof(Status.Archived).ToLower());
+
+        var resultActive = await _baseFixture.Client.UnarchiveTodolistsAsync(
+            _baseFixture.AccountId,
+            _baseFixture.ProjectId,
+            resultCreate.Todoset.Id);
+        resultArchived.ShouldBeNull();
+
+        resultGet = await _baseFixture.Client.GetTodolistsAsync(_baseFixture.AccountId,
+            _baseFixture.ProjectId,
+            resultCreate.Todoset.Id);
+        resultGet.Error.ShouldBeNull();
+        resultGet.Todoset.ShouldNotBeNull();
+        resultGet.Todoset.Status.ShouldBe(nameof(Status.Active).ToLower());
+
         var resultTrash = await _baseFixture.Client.TrashTodolistsAsync(
             _baseFixture.AccountId,
             _baseFixture.ProjectId,
             resultCreate.Todoset.Id);
         resultTrash.ShouldBeNull();
 
-        var resultGet = await _baseFixture.Client.GetTodolistsAsync(_baseFixture.AccountId,
+        resultGet = await _baseFixture.Client.GetTodolistsAsync(_baseFixture.AccountId,
             _baseFixture.ProjectId,
             resultCreate.Todoset.Id);
         resultGet.Error.ShouldBeNull();
