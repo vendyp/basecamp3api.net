@@ -31,6 +31,8 @@ public record Todoset
 
     [JsonPropertyName("creator")] public Creator Creator { get; set; } = null!;
 
+    [JsonPropertyName("parent")] public Parent? Parent { get; set; }
+
     [JsonPropertyName("completed")] public bool? Completed { get; set; }
 
     [JsonPropertyName("completed_ratio")] public string CompletedRatio { get; set; } = null!;
@@ -43,4 +45,6 @@ public record Todoset
 
     [JsonPropertyName("app_todoslists_url")]
     public string AppTodosListUrl { get; set; } = null!;
+
+    [JsonPropertyName("description")] public string? Description { get; set; }
 }
