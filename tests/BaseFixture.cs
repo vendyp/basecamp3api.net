@@ -95,9 +95,6 @@ public class BaseFixture : IDisposable, ICollectionFixture<BaseFixture>
             AppName = configuration.GetValue<string>("AppName"),
         };
 
-        Client = new BasecampApiClient(dto);
-        Client.Setup(Setting.AccessToken, Setting.ExpiresIn, Setting.RefreshToken);
-
         //setup testing selected account id, project id, and others dock(s) id
         //from appsettings.json
         var accountId = configuration.GetValue<string>("AccountId");
@@ -139,6 +136,10 @@ public class BaseFixture : IDisposable, ICollectionFixture<BaseFixture>
         var kanbanId = configuration.GetValue<string>("KanbanId");
         if (!string.IsNullOrWhiteSpace(kanbanId) && long.TryParse(kanbanId, out var kId))
             DockKanbanId = kId;
+
+        Client = new BasecampApiClient(dto);
+        Client.Setup(Setting.AccessToken, Setting.ExpiresIn, Setting.RefreshToken);
+        _ = Client.GetAuthorizationAsync(CancellationToken.None).GetAwaiter().GetResult();
     }
 
     public BasecampApiClient Client { get; }
