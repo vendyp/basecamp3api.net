@@ -14,9 +14,9 @@ public record Creator
 
     [JsonPropertyName("title")] public string Title { get; set; } = null!;
 
-    [JsonPropertyName("bio")] public string Bio { get; set; } = null!;
+    [JsonPropertyName("bio")] public string? Bio { get; set; }
 
-    [JsonPropertyName("location")] public string Location { get; set; } = null!;
+    [JsonPropertyName("location")] public string? Location { get; set; }
 
     [JsonPropertyName("created_at")] public DateTime? CreatedAt { get; set; }
 
@@ -30,9 +30,9 @@ public record Creator
 
     [JsonPropertyName("employee")] public bool? Employee { get; set; }
 
-    [JsonPropertyName("time_zone")] public string TimeZone { get; set; } = null!;
+    [JsonPropertyName("time_zone")] public string? TimeZone { get; set; }
 
-    [JsonPropertyName("avatar_url")] public string AvatarUrl { get; set; } = null!;
+    [JsonPropertyName("avatar_url")] public string? AvatarUrl { get; set; }
 
     [JsonPropertyName("company")] public Company Company { get; set; } = null!;
 

@@ -2,7 +2,7 @@
 
 public partial class BasecampApiClient
 {
-    public async Task<(Todoset? Todoset, Error? Error)> UpdateTodolistsAsync(
+    public async Task<(Todos? Todoset, Error? Error)> UpdateTodolistsAsync(
         long accountId,
         long projectId,
         long todolistsId,
@@ -37,7 +37,7 @@ public partial class BasecampApiClient
         if (response.Error != null)
             return (null, response.Error);
 
-        var result = JsonSerializer.Deserialize<Todoset>(response.Response!.Value.ResultJsonInString);
+        var result = JsonSerializer.Deserialize<Todos>(response.Response!.Value.ResultJsonInString);
 
         return (result, null);
     }

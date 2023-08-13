@@ -4,7 +4,7 @@ namespace Basecamp3Api;
 
 public partial class BasecampApiClient
 {
-    public async Task<(PagedList<Todoset>? TodoLists, Error? Error)> GetAllTodolistsAsync(
+    public async Task<(PagedList<Todos>? TodoLists, Error? Error)> GetAllTodolistsAsync(
         long accountId,
         long projectId,
         long todosetId,
@@ -42,9 +42,9 @@ public partial class BasecampApiClient
         if (response.Error != null)
             return (null, response.Error);
 
-        var results = JsonSerializer.Deserialize<List<Todoset>>(response.Response!.Value.ResultJsonInString)!;
+        var results = JsonSerializer.Deserialize<List<Todos>>(response.Response!.Value.ResultJsonInString)!;
 
-        return (new PagedList<Todoset>(results)
+        return (new PagedList<Todos>(results)
             {
                 HasNextPage = response.Response.Value.Headers.Any(e => e.Key == "Link")
             },

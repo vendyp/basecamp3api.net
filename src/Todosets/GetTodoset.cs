@@ -2,7 +2,7 @@
 
 public partial class BasecampApiClient
 {
-    public async Task<(Todoset? Todoset, Error? Error)> GetTodosetAsync(long accountId, long projectId, long todosetId,
+    public async Task<(Todos? Todoset, Error? Error)> GetTodosetAsync(long accountId, long projectId, long todosetId,
         CancellationToken cancellationToken = default)
     {
         if (!TokenHasBeenSet)
@@ -28,7 +28,7 @@ public partial class BasecampApiClient
         if (response.Error != null)
             return (null, response.Error);
 
-        var result = JsonSerializer.Deserialize<Todoset>(response.Response!.Value.ResultJsonInString)!;
+        var result = JsonSerializer.Deserialize<Todos>(response.Response!.Value.ResultJsonInString)!;
 
         return (result, null);
     }
