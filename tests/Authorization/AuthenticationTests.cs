@@ -1,6 +1,6 @@
 ﻿namespace Basecamp3Api.Tests.Authorization;
 
-[Collection(nameof(BaseFixture))]
+[Collection(nameof(Basecamp3ApiTestCollection))]
 public class AuthenticationTests
 {
     private readonly BaseFixture _baseFixture;

@@ -1,6 +1,6 @@
 ﻿namespace Basecamp3Api.Tests.Todosets;
 
-[Collection(nameof(BaseFixture))]
+[Collection(nameof(Basecamp3ApiTestCollection))]
 public class GetTodosetTests
 {
     private readonly BaseFixture _baseFixture;

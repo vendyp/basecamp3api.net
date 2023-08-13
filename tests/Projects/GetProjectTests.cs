@@ -1,6 +1,6 @@
 ﻿namespace Basecamp3Api.Tests.Projects;
 
-[Collection(nameof(BaseFixture))]
+[Collection(nameof(Basecamp3ApiTestCollection))]
 public class GetProjectTests
 {
     private readonly BaseFixture _baseFixture;

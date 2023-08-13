@@ -1,6 +1,6 @@
 ﻿namespace Basecamp3Api.Tests.Todolists;
 
-[Collection(nameof(BaseFixture))]
+[Collection(nameof(Basecamp3ApiTestCollection))]
 public class TodolistsTests
 {
     private readonly BaseFixture _baseFixture;
