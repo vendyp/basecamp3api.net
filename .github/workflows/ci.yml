@@ -35,13 +35,29 @@ jobs:
           kanbanid="${{ secrets.KANBANID }}"
           
           # Update the JSON file using jq
-          jq --arg clientid "$clientid" --arg clientsecretid "$clientsecretid" --arg appname "$appname" --arg accountid '$accountid' --arg projectid "$projectid" --arg messageboardid "$messageboardid" --arg todosetsid "$todosetsid" --arg vaultid "$vaultid" --arg campfireid "$campfireid" --arg scheduleid "$scheduleid" --arg questionnaireid "$questionnaireid" --arg inboxid "$inboxid" --arg kanbanid "$kanbanid" '.ClientId = $clientid | .ClientSecretId = $clientsecretid | .AppName = $appname | .AccountId = $accountid | .ProjectId = $projectid | .MessageBoardId = $messageboardid | .TodosetsId = $todosetsid | .VaultId = $vaultid | .CampfireId = $campfireid | .ScheduleId = $scheduleid | .QuestionnaireId = $questionnaireid | .InboxId = $inboxid | .KanbanId = $kanbanid' tests/appsettings.json > updated_appsettings.json
+          jq --arg clientid "$clientid" --arg clientsecretid "$clientsecretid" --arg appname "$appname" '.ClientId = $clientid | .ClientSecretId = $clientsecretid | .AppName = $appname' tests/appsettings.json > updated_appsettings.json
+          
+          mv updated_appsettings.json tests/appsettings.json
+          
+          jq --arg accountid '$accountid' --arg projectid "$projectid" --arg messageboardid "$messageboardid" '.AccountId = $accountid | .ProjectId = $projectid | .MessageBoardId = $messageboardid' tests/appsettings.json > updated_appsettings2.json
+          
+          mv updated_appsettings2.json tests/appsettings.json
+          
+          jq --arg todosetsid "$todosetsid" --arg vaultid "$vaultid" --arg campfireid "$campfireid"  '.TodosetsId = $todosetsid | .VaultId = $vaultid | .CampfireId = $campfireid' tests/appsettings.json > updated_appsettings3.json
+          
+          mv updated_appsettings3.json tests/appsettings.json
+          
+          jq --arg scheduleid "$scheduleid" --arg questionnaireid "$questionnaireid"  '.ScheduleId = $scheduleid | .QuestionnaireId = $questionnaireid' tests/appsettings.json > updated_appsettings4.json
+          
+          mv updated_appsettings4.json tests/appsettings.json
+          
+          jq --arg inboxid "$inboxid" --arg kanbanid "$kanbanid" '.InboxId = $inboxid | .KanbanId = $kanbanid' tests/appsettings.json > updated_appsettings5.json
+          
+          mv updated_appsettings5.json tests/appsettings.json
           
           # Update the JSON file using jq
           jq --arg accesstoken "$accesstoken" --arg refreshtoken "$refreshtoken" --arg refreshtoken "$refreshtoken" '.access_token = $accesstoken | .refresh_token = $refreshtoken' tests/basecamp.json > updated_basecamp.json
-          
-          # Overwrite the original file with the updated contents
-          mv updated_appsettings.json tests/appsettings.json
+
           mv updated_basecamp.json tests/basecamp.json
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
