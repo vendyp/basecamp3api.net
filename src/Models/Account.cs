@@ -4,7 +4,7 @@ public record Account
 {
     [JsonPropertyName("product")] public string Product { get; set; } = null!;
 
-    [JsonPropertyName("id")] public int Id { get; set; }
+    [JsonPropertyName("id")] public long Id { get; set; }
 
     [JsonPropertyName("name")] public string Name { get; set; } = null!;
 
