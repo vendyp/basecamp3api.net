@@ -62,7 +62,7 @@ public class TodolistsTests
             _baseFixture.AccountId,
             _baseFixture.ProjectId,
             resultCreate.Todoset.Id);
-        resultArchived.ShouldBeNull();
+        resultActive.ShouldBeNull();
 
         resultGet = await _baseFixture.Client.GetTodolistsAsync(_baseFixture.AccountId,
             _baseFixture.ProjectId,
