@@ -48,6 +48,8 @@ public partial class BasecampApiClient : IDisposable
                 Message = "Account has not been set"
             };
 
+        Console.WriteLine(accountId); // for the purpose only 1 time
+        
         if (!Accounts.Any(e => e.Id == accountId))
             return new Error
             {
