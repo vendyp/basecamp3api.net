@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.1.1-alpha
+
+- add default setting for testing
+- add API for todoset
+- add API for todolists
+- add flagging on/off validating account id
+- refactoring
+
 ## 0.1.0-alpha
 
 - Remove exceptions, use tuple instead
