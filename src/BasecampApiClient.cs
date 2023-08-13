@@ -41,6 +41,13 @@ public partial class BasecampApiClient : IDisposable
     {
         if (!_setting.ValidateAccountId) return null;
 
+        if (!AccountHasBeenSet)
+            return new Error
+            {
+                StatusCode = -1,
+                Message = "Account has not been set"
+            };
+
         if (!Accounts.Any(e => e.Id == accountId))
             return new Error
             {
