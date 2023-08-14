@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.0
+
+- Fixed API Projects
+- Fixed API Authentication
+- Fixed API Todoset
+- Fixed API Todolists
+- Fixed API Todos
+
 ## 0.1.2-alpha
 
 - add API todo(s)
