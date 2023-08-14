@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.1.2-alpha
+
+- add API todo(s)
+- add new property for testing TodoListsId
+- Bugfix and improvement
+
 ## 0.1.1-alpha
 
 - add default setting for testing
