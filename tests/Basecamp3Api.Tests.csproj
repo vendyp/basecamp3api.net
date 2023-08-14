@@ -39,6 +39,8 @@
     <None Update="basecamp.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+
+
   </ItemGroup>
 
 

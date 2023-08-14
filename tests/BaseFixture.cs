@@ -56,6 +56,11 @@ public class BaseFixture : IDisposable, ICollectionFixture<BaseFixture>
     /// </summary>
     public long DockKanbanId { get; }
 
+    /// <summary>
+    /// Todolists id for testing purpose
+    /// </summary>
+    public long TodolistsId { get; set; }
+
     public BaseFixture()
     {
         // get these from get project by id, replace these values with yours then test run will be just fine
@@ -135,6 +140,10 @@ public class BaseFixture : IDisposable, ICollectionFixture<BaseFixture>
         var kanbanId = configuration.GetValue<string>("KanbanId");
         if (!string.IsNullOrWhiteSpace(kanbanId) && long.TryParse(kanbanId, out var kId))
             DockKanbanId = kId;
+
+        var todolistId = configuration.GetValue<string>("TodolistsId");
+        if (!string.IsNullOrWhiteSpace(todolistId) && long.TryParse(todolistId, out var tId))
+            TodolistsId = tId;
 
         Client = new BasecampApiClient(dto);
         Client.Setup(Setting.AccessToken, Setting.ExpiresIn, Setting.RefreshToken);

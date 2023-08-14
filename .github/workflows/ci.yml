@@ -33,13 +33,14 @@ jobs:
           questionnaireid="${{ secrets.QUESTIONNAIREID }}"
           inboxid="${{ secrets.INBOXID }}"
           kanbanid="${{ secrets.KANBANID }}"
+          todolistsid="${{ secrets.KANBANID }}"
           
           # Update the JSON file using jq
           jq --arg clientid "$clientid" --arg clientsecretid "$clientsecretid" --arg appname "$appname" '.ClientId = $clientid | .ClientSecretId = $clientsecretid | .AppName = $appname' tests/appsettings.json > updated_appsettings.json
           
           mv updated_appsettings.json tests/appsettings.json
           
-          jq --arg accountid '$accountid' --arg projectid "$projectid" --arg messageboardid "$messageboardid" '.AccountId = $accountid | .ProjectId = $projectid | .MessageBoardId = $messageboardid' tests/appsettings.json > updated_appsettings2.json
+          jq --arg accountid "$accountid" --arg projectid "$projectid" --arg messageboardid "$messageboardid" '.AccountId = $accountid | .ProjectId = $projectid | .MessageBoardId = $messageboardid' tests/appsettings.json > updated_appsettings2.json
           
           mv updated_appsettings2.json tests/appsettings.json
           
@@ -51,7 +52,7 @@ jobs:
           
           mv updated_appsettings4.json tests/appsettings.json
           
-          jq --arg inboxid "$inboxid" --arg kanbanid "$kanbanid" '.InboxId = $inboxid | .KanbanId = $kanbanid' tests/appsettings.json > updated_appsettings5.json
+          jq --arg inboxid "$inboxid" --arg kanbanid "$kanbanid" --arg todolistsid "$todolistsid" '.InboxId = $inboxid | .KanbanId = $kanbanid | .TodolistsId = $todolistsid' tests/appsettings.json > updated_appsettings5.json
           
           mv updated_appsettings5.json tests/appsettings.json
           

@@ -58,4 +58,17 @@ public record Todos
 
     [JsonPropertyName("group_position_url")]
     public string? GroupPositionUrl { get; set; }
+
+    [JsonPropertyName("content")] public string? Content { get; set; }
+
+    [JsonPropertyName("start_on")] public DateTime? StartOn { get; set; }
+
+    [JsonPropertyName("due_on")] public DateTime? DueOn { get; set; }
+
+    [JsonPropertyName("completion")] public Completion? Completion { get; set; }
+
+    [JsonPropertyName("assignees")] public List<People>? Assignees { get; set; }
+
+    [JsonPropertyName("completion_subscribers")]
+    public List<People>? Subscribers { get; set; }
 }
