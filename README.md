@@ -94,6 +94,10 @@ Docs [here](https://github.com/basecamp/bc3-api/blob/master/sections/todos.md)
 
 The rest will follow :)
 
+# Upcoming API
+
+Working on People API..
+
 # Change Log
 
 Change log detail are [here](https://github.com/vendyp/basecamp3api.net/blob/main/CHANGELOG.md)
