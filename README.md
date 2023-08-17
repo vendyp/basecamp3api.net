@@ -96,7 +96,7 @@ The rest will follow :)
 
 # Upcoming API
 
-Working on People API..
+Working on People, and Webhooks API
 
 # Change Log
 
