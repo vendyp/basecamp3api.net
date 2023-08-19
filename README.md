@@ -92,8 +92,6 @@ Docs [here](https://github.com/basecamp/bc3-api/blob/master/sections/todos.md)
 * Reposition Todos
 * Trash Todos
 
-The rest will follow :)
-
 ## Peoples
 
 * Get all people 
