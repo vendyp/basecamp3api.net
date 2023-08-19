@@ -94,7 +94,9 @@ Docs [here](https://github.com/basecamp/bc3-api/blob/master/sections/todos.md)
 
 ## Peoples
 
-* Get all people 
+Docs [here](https://github.com/basecamp/bc3-api/blob/master/sections/people.md)
+
+* Get all people
 * Get all people in project
 * Get all pingable people
 * Get my personal information
