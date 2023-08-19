@@ -94,9 +94,18 @@ Docs [here](https://github.com/basecamp/bc3-api/blob/master/sections/todos.md)
 
 The rest will follow :)
 
+## Peoples
+
+* Get all people 
+* Get all people in project
+* Get all pingable people
+* Get my personal information
+* Get people by id
+* Update who can access project (grant/revoke/create)
+
 # Upcoming API
 
-Working on People, and Webhooks API
+Working on Webhooks API
 
 # Change Log
 
