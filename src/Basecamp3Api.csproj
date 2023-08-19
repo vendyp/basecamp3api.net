@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>Basecamp3Api</RootNamespace>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>1.0.1</PackageVersion>
         <Authors>Dwi Vendy Pratama</Authors>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/vendyp/basecamp3api.net</RepositoryUrl>

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.1
+
+- Add new API(s) of People. Source [here](https://github.com/basecamp/bc3-api/blob/master/sections/people.md)
+
 ## 1.0.0
 
 - Fixed API Projects
