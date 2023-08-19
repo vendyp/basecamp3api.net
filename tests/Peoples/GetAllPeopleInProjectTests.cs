@@ -13,12 +13,12 @@ public class GetAllPeopleInProjectTests
     [Fact]
     public async Task GetAllPeopleInProject_Should_Do_As_Expected()
     {
-        var todolists = await _baseFixture.Client.GetAllPeopleInProjectAsync(
+        var results = await _baseFixture.Client.GetAllPeopleInProjectAsync(
             _baseFixture.AccountId,
             _baseFixture.ProjectId,
             CancellationToken.None);
 
-        todolists.Error.ShouldBeNull();
-        todolists.Peoples.ShouldNotBeNull();
+        results.Error.ShouldBeNull();
+        results.Peoples.ShouldNotBeNull();
     }
 }
