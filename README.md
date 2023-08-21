@@ -85,12 +85,9 @@ Docs [here](https://github.com/basecamp/bc3-api/blob/master/sections/todos.md)
 * Update Todos
 * Complete Todos
 * Uncomplete Todos
-* Archive Todos
-* Unarchive Todos
 * Get All Todos
 * Get Todos
 * Reposition Todos
-* Trash Todos
 
 ## Peoples
 
@@ -103,9 +100,14 @@ Docs [here](https://github.com/basecamp/bc3-api/blob/master/sections/people.md)
 * Get people by id
 * Update who can access project (grant/revoke/create)
 
-# Upcoming API
+## Recordings
 
-Working on Recordings API
+Docs [here](https://github.com/basecamp/bc3-api/blob/master/sections/recordings.md)
+
+* Get recordings
+* Archive recording
+* Unarchive recording
+* Trash recording
 
 # Change Log
 
