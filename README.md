@@ -105,7 +105,7 @@ Docs [here](https://github.com/basecamp/bc3-api/blob/master/sections/people.md)
 
 # Upcoming API
 
-Working on Webhooks API
+Working on Recordings API
 
 # Change Log
 
