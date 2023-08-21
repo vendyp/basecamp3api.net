@@ -86,7 +86,7 @@ public class TodosTests
         if (resultGet.Todos.Completed.HasValue)
             resultGet.Todos.Completed.Value.ShouldBeFalse();
 
-        var resultTrash = await _baseFixture.Client.TrashTodoAsync(
+        var resultTrash = await _baseFixture.Client.TrashRecordingAsync(
             _baseFixture.AccountId,
             _baseFixture.ProjectId,
             resultCreate.Todos.Id);

@@ -45,7 +45,7 @@ public class TodolistsTests
         resultUpdate.Todoset.ShouldNotBeNull();
         resultUpdate.Todoset.Title.ShouldBe(secondName);
 
-        var resultArchived = await _baseFixture.Client.ArchiveTodolistsAsync(
+        var resultArchived = await _baseFixture.Client.ArchiveRecordingAsync(
             _baseFixture.AccountId,
             _baseFixture.ProjectId,
             resultCreate.Todoset.Id);
@@ -58,7 +58,7 @@ public class TodolistsTests
         resultGet.Todoset.ShouldNotBeNull();
         resultGet.Todoset.Status.ShouldBe(nameof(Status.Archived).ToLower());
 
-        var resultActive = await _baseFixture.Client.UnarchiveTodolistsAsync(
+        var resultActive = await _baseFixture.Client.UnarchiveRecordingAsync(
             _baseFixture.AccountId,
             _baseFixture.ProjectId,
             resultCreate.Todoset.Id);
@@ -71,7 +71,7 @@ public class TodolistsTests
         resultGet.Todoset.ShouldNotBeNull();
         resultGet.Todoset.Status.ShouldBe(nameof(Status.Active).ToLower());
 
-        var resultTrash = await _baseFixture.Client.TrashTodolistsAsync(
+        var resultTrash = await _baseFixture.Client.TrashRecordingAsync(
             _baseFixture.AccountId,
             _baseFixture.ProjectId,
             resultCreate.Todoset.Id);
