@@ -1,6 +1,6 @@
 ﻿namespace Basecamp3Api.Models;
 
-public record Todos
+public record Todos 
 {
     [JsonPropertyName("id")] public long Id { get; set; }
     [JsonPropertyName("status")] public string Status { get; set; } = null!;

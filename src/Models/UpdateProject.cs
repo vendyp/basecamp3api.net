@@ -1,6 +1,6 @@
 ﻿namespace Basecamp3Api.Models;
 
-public record UpdateProject
+public record UpdateProject 
 {
     public string? Name { get; set; }
     public string? Description { get; set; }

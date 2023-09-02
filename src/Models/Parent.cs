@@ -1,6 +1,6 @@
 ﻿namespace Basecamp3Api.Models;
 
-public record Parent
+public record Parent 
 {
     [JsonPropertyName("id")] public long Id { get; set; }
 

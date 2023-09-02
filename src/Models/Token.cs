@@ -1,6 +1,6 @@
 ﻿namespace Basecamp3Api.Models;
 
-public record Token
+public record Token 
 {
     [JsonPropertyName("access_token")] public string AccessToken { get; set; } = null!;
     [JsonPropertyName("expires_in")] public long ExpiresIn { get; set; }

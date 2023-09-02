@@ -1,6 +1,6 @@
 ﻿namespace Basecamp3Api.Models;
 
-public record PagedList<T>
+public record PagedList<T> 
 {
     public PagedList(List<T> results)
     {
