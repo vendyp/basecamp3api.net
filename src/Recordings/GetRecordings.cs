@@ -97,15 +97,58 @@ public partial class BasecampApiClient
         // GET /projects/recordings.json
         var pattern = $"{accountId}/projects/recordings.json";
 
-        var uri = new UriBuilder(BaseUrl + pattern);
-        if (page > 1)
+        var typeInString = string.Empty;
+
+        switch (type)
         {
-            var nvc = new NameValueCollection(1)
-            {
-                ["page"] = page.ToString()
-            };
-            uri.AddQueryParams(ConstructQueryString(nvc));
+            case GetRecordingType.Todo:
+                typeInString = "Todo";
+                break;
+            case GetRecordingType.Todolist:
+                typeInString = "Todolist";
+                break;
         }
+
+        var bucketInString = string.Empty;
+
+        if (projectIds != null && projectIds.Length > 0)
+            bucketInString = string.Join(',', projectIds);
+
+        string sortInString = string.Empty;
+        switch (sort)
+        {
+            case GetRecordingSort.Created:
+                sortInString = sort.ToString().ToLower();
+                break;
+            case GetRecordingSort.Updated:
+                sortInString = sort.ToString().ToLower();
+                break;
+        }
+
+        string directionInString = string.Empty;
+
+        switch (direction)
+        {
+            case GetRecordingDirection.Ascending:
+                directionInString = "asc";
+                break;
+            case GetRecordingDirection.Descending:
+                directionInString = "desc";
+                break;
+        }
+
+        var nvc = new NameValueCollection(6)
+        {
+            ["page"] = page.ToString(),
+            ["type"] = typeInString,
+            ["bucket"] = bucketInString,
+            ["status "] = status.ToString().ToLower(),
+            ["sort "] = sortInString,
+            ["direction "] = directionInString
+        };
+
+        var uri = new UriBuilder(BaseUrl + pattern);
+        uri.AddQueryParams(ConstructQueryString(nvc));
 
         var request = CreateRequestMessageWithAuthentication(HttpMethod.Get, uri.Uri, null);
 
