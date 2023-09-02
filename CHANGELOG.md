@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.1.0
+
+Breaking changes
+- Remove Archive/Unarchive/Trash inside template
+- Creates own Recordings API 
+
 ## 1.0.1
 
 - Add new API(s) of People. Source [here](https://github.com/basecamp/bc3-api/blob/master/sections/people.md)
